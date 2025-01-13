@@ -1,5 +1,8 @@
 import serial
 import os
+import subprocess
+from subprocess import CREATE_NEW_CONSOLE
+from dotenv import load_dotenv, dotenv_values
 from pynput.keyboard import Key, Controller
 
 # Setup the serial connection
@@ -7,10 +10,21 @@ isRunning = True
 ser = serial.Serial("COM7")
 keyboard = Controller()
 
+# Load the .env vars
+load_dotenv()
+ip = os.getenv("MY_IP")
+username = os.getenv("USERNAME").lower()
+serverPort = os.getenv("SERVER_PORT")
+
+# Powershell path
+powershellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
 # Variables for the serial
 inputBytes = None
 inputInt = 0
 
+
+# Loop for macros
 while isRunning:
     inputBytes = ser.read()
     inputInt = int.from_bytes(inputBytes, 'big')
@@ -24,21 +38,21 @@ while isRunning:
 
         case 2:
             # Open powershell
-            os.startfile("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe")
+            subprocess.Popen(powershellPath, creationflags=CREATE_NEW_CONSOLE)
 
         case 3:
+            # Open my server via ssh
+            subprocess.Popen([powershellPath, f"ssh -p {serverPort} {username}@{ip}"], creationflags=CREATE_NEW_CONSOLE)
+
+        case 4:
             # Via Geforce Experience, save an instant replay
             keyboard.press(Key.alt)
             keyboard.tap(Key.f10)
             keyboard.release(Key.alt)
             
-        case 4:
-            # Under construction
-            print(4)
-        
         case 5:
             # Under construction
-            print(5)  
+            print(5)
 
         case 6:
             # Under construction
