@@ -1,0 +1,1 @@
+This code is for when you don't want to use resistors and run the pins as pull up.
