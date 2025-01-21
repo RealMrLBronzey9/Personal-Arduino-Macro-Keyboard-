@@ -1,6 +1,7 @@
 import serial
 import os
 import subprocess
+import time
 from subprocess import CREATE_NEW_CONSOLE
 from dotenv import load_dotenv, dotenv_values
 from pynput.keyboard import Key, Controller
@@ -15,6 +16,7 @@ load_dotenv()
 ip = os.getenv("MY_IP")
 username = os.getenv("USERNAME").lower()
 serverPort = os.getenv("SERVER_PORT")
+thpracPath = os.getenv("TOUHOU_THPRAC")
 
 # Powershell path
 powershellPath = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
@@ -51,8 +53,13 @@ while isRunning:
             keyboard.release(Key.alt)
             
         case 5:
-            # Under construction
-            print(5)
+            # Run Touhou thprac (only when playing Touhou)
+            subprocess.Popen(thpracPath)
+            
+            # Automatically say yes to the prompts
+            time.sleep(0.10)
+            keyboard.tap(Key.enter)
+            keyboard.tap(Key.enter)
 
         case 6:
             # Under construction
