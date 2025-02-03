@@ -31,9 +31,37 @@ void loop() {
 
     if(switchStatus == LOW){
       isButtonPressed = true;
-      Serial.write(i - 1);  // Write the specified switch number (pin 2 is switch 1..)
+
+      // Ok so I kinda did a horrible soldering job (my first time so yeah)
+      // This is now how it goes
+      switch(i){
+        case 7:
+          Serial.write(1);
+          break;
+        case 6:
+          Serial.write(2);
+          break;
+        case 10:
+          Serial.write(3);
+          break;
+        case 9:
+          Serial.write(4);
+          break;
+        case 5:
+          Serial.write(5);
+          break;
+        case 3:
+          Serial.write(6);
+          break;
+        case 2:
+          Serial.write(7);
+          break;
+        case 11:
+          Serial.write(8);
+          break;
+      }
     }
   }
-
+  // Set a delay
   delay(200);
 }
